@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "430471370826",
+    "project_id": "fatishop-cdbe5",
+    "storage_bucket": "fatishop-cdbe5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430471370826:android:383ec4a3c4ef324ed76eb3",
+        "android_client_info": {
+          "package_name": "com.example.fatishop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSqBrdnNKglwDiXfBkvSQPNUme9ZqKkeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
