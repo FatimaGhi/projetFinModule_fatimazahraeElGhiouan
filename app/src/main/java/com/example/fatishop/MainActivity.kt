@@ -13,14 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.fatishop.shared.navigation.BottomNavigationBar
 import com.example.fatishop.ui.theme.FatiShopTheme
+import com.example.fatishop.shared.navigation.BottomNavigationBar
+import com.example.fatishop.shared.navigation.BottomNavGraph
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
             FatiShopTheme {
-                val navController = rememberNavController()
                 AppNavGraph(navController = navController)
             }
         }

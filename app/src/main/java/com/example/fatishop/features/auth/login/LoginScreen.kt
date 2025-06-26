@@ -110,8 +110,12 @@ fun LoginScreen(
                     CircularProgressIndicator()
                 }
                 is LoginUiState.Success -> {
-                    Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
-                    // navController.navigate(Routes.HOME)
+                    LaunchedEffect(Unit) {
+                        Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
+                        navController.navigate(Routes.MAIN) {
+                            popUpTo(Routes.LOGIN) { inclusive = true }
+                        }
+                    }
                 }
                 is LoginUiState.Error -> {
                     Toast.makeText(context, (loginState as LoginUiState.Error).message, Toast.LENGTH_LONG).show()

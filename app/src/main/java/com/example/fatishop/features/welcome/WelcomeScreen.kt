@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.fatishop.shared.utils.Routes
+import com.example.fatishop.shared.utils.firestore.dummyPerfumes
+import com.example.fatishop.shared.utils.firestore.uploadProductsToFirestore
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
@@ -39,6 +41,13 @@ fun WelcomeScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Register")
+            }
+//            @Composable
+//            fun UploadButton() {
+            // hado dyl product bax nzidhom fe firestore da9a wo7da hhh m3gaza ana
+                Button(onClick = { uploadProductsToFirestore(dummyPerfumes) }) {
+                    Text("Upload Products to Firestore")
+//                }
             }
         }
     }

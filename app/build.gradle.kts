@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.navigation.runtime.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,6 +65,35 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation ("io.coil-kt:coil-compose:2.4.0")
+    implementation ("io.coil-kt:coil-gif:2.4.0")
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    implementation ( "androidx.activity:activity-compose:1.7.0")
+    implementation ("androidx.compose.material3:material3:1.1.0")
+
+
+        implementation ("androidx.core:core-ktx:1.10.0")
+        implementation ("androidx.appcompat:appcompat:1.6.1")
+        implementation ("com.google.android.material:material:1.8.0")
+        implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+
+        // Compose
+        implementation ("androidx.activity:activity-compose:1.7.0")
+        implementation ("androidx.compose.ui:ui:1.4.3")
+        implementation ("androidx.compose.material3:material3:1.1.0")
+
+        // Navigation
+        implementation ("androidx.navigation:navigation-compose:2.9.0")
+
+
+
+
+
+
 
 
 }
