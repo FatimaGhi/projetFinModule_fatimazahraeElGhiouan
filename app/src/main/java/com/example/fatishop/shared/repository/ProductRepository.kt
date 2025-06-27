@@ -1,5 +1,6 @@
 package com.example.fatishop.shared.repository
 
+import androidx.compose.runtime.MutableState
 import com.example.fatishop.shared.model.Product
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -70,4 +71,41 @@ class ProductRepository @Inject constructor(
             emptyList()
         }
     }
+
+     suspend fun toggleFavorite(productId: String) {
+        val productRef = firestore.collection("products").document(productId)
+        firestore.runTransaction { transaction ->
+            val snapshot = transaction.get(productRef)
+            val currentFavorite = snapshot.getBoolean("isFavorite") ?: false
+            transaction.update(productRef, "isFavorite", !currentFavorite)
+        }.await()
+    }
+
+    suspend fun addToCart(
+        userId: String,
+        productId: String,
+        name: String,
+        price: Double,
+        imageUrl: String,
+        quantity: Int
+    ) {
+        val cartItem = hashMapOf(
+            "productId" to productId,
+            "name" to name,
+            "price" to price,
+            "imageUrl" to imageUrl,
+            "quantity" to quantity,
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        firestore.collection("users")
+            .document(userId)
+            .collection("cart")
+            .document(productId)
+            .set(cartItem)
+            .await()
+    }
+
+
+
 }

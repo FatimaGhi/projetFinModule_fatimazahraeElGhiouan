@@ -37,14 +37,17 @@ import androidx.compose.ui.res.painterResource
 
 import com.example.fatishop.features.components.ProductCard
 import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.navigation.NavController
+import com.example.fatishop.features.productdetailss.ProductDetailSheetContent
+import com.example.fatishop.shared.utils.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //@HiltViewModel
 fun HomeScreen(
+    navController: NavController,
     viewModel: HomeViewModel = hiltViewModel(),
-    onProductClick: (String) -> Unit,
-    onBrandSelected: (String) -> Unit
+    onBrandSelected: (String) -> Unit = {},
 ) {
     val products by viewModel.products.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
@@ -139,14 +142,37 @@ fun HomeScreen(
                     items(products) { product ->
                         ProductCard(
                             product = product,
-                            onItemClick = { onProductClick(product.id) }
+                            onItemClick = {
+                                viewModel.selectProduct(product)
+                            },
+                            onFavoriteClick = {
+                                // Handle favorite toggle here
+                                viewModel.toggleFavorite(product.id)
+                            }
                         )
                     }
                 }
             }
         }
     }
+    val selectedProduct by viewModel.selectedProduct.collectAsStateWithLifecycle()
+
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
+
+    if (selectedProduct != null) {
+        ModalBottomSheet(
+            onDismissRequest = { viewModel.clearSelectedProduct() },
+            sheetState = sheetState
+        ) {
+            ProductDetailSheetContent(
+                product = selectedProduct!!,
+                onDismiss = { viewModel.clearSelectedProduct() }
+            )
+        }
+    }
 }
+
 
 
 

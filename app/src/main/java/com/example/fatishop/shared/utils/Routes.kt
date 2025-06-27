@@ -13,11 +13,15 @@ object Routes {
     const val PROFILE = "profile"
     const val MAIN = "main"
     const val BRAND = "brand/{brandName}"
-    const val PRODUCT_DETAILS = "product_details/{productId}"
 
     fun brandRoute(brandName: String): String {
         val encodedBrand = Uri.encode(brandName)
         return "brand/$encodedBrand"
     }
+
+    const val PRODUCT_DETAILS = "product_details/{productId}"
+
+    fun productDetailsRoute(productId: String): String =
+        "product_details/$productId"
 
 }
