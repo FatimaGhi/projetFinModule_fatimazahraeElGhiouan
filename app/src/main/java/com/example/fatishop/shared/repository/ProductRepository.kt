@@ -3,9 +3,11 @@ package com.example.fatishop.shared.repository
 import com.example.fatishop.shared.model.Product
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class ProductRepository {
-    private val firestore = FirebaseFirestore.getInstance()
+class ProductRepository @Inject constructor(
+    private val firestore: FirebaseFirestore
+) {
     private val productsCollection = firestore.collection("products")
 
     suspend fun addProduct(product: Product) {
@@ -44,5 +46,28 @@ class ProductRepository {
             .await()
             .toObjects(Product::class.java)
             .map { it.copy(isFavorite = false) }
+    }
+
+    suspend fun getAllBrands(): List<String> {
+        return productsCollection
+            .get()
+            .await()
+            .toObjects(Product::class.java)
+            .map { it.brand }
+            .distinct()
+            .sorted()
+    }
+
+    suspend fun getProductsByBrand(brand: String): List<Product> {
+        return try {
+            productsCollection
+                .whereEqualTo("brand", brand)
+                .get()
+                .await()
+                .toObjects(Product::class.java)
+        } catch (e: Exception) {
+            println("Error getting products by brand: ${e.message}")
+            emptyList()
+        }
     }
 }

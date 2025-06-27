@@ -19,7 +19,12 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
         startDestination = BottomNavItem.Home.route,
         modifier = modifier
     ) {
-        composable(BottomNavItem.Home.route) { HomeScreen() }
+        composable(BottomNavItem.Home.route) { HomeScreen(onProductClick = { productId ->
+            navController.navigate("product_details/$productId")
+        },
+            onBrandSelected = { brand ->
+
+            }) }
         composable(BottomNavItem.Cart.route) { CartScreen() }
         composable(BottomNavItem.Wishlist.route) { WishListScreen() }
         composable(BottomNavItem.Profile.route) { ProfileScreen() }

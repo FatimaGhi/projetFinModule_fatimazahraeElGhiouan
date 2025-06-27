@@ -17,7 +17,10 @@ import com.example.fatishop.shared.navigation.BottomNavigationBar
 import com.example.fatishop.ui.theme.FatiShopTheme
 import com.example.fatishop.shared.navigation.BottomNavigationBar
 import com.example.fatishop.shared.navigation.BottomNavGraph
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,6 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.dagger.hilt.plugin)
+    alias(libs.plugins.kotlin.kapt)
+
+
+
+
 }
 
 android {
@@ -88,6 +94,9 @@ dependencies {
 
         // Navigation
         implementation ("androidx.navigation:navigation-compose:2.9.0")
+    //hilt
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 
 
 

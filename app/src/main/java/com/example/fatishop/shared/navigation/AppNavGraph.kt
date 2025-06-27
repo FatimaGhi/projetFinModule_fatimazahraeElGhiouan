@@ -1,5 +1,6 @@
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +16,9 @@ import com.example.fatishop.features.wishlist.WishListScreen
 import com.example.fatishop.shared.utils.Routes
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.fatishop.features.components.ProductDetailsScreen
 import com.example.fatishop.features.home.HomeScreen
+import com.example.fatishop.features.home.HomeViewModel
 import com.example.fatishop.features.home.brand.BrandScreen
 
 
@@ -37,8 +40,31 @@ fun AppNavGraph(navController: NavHostController) {
 //        composable(Routes.HOME) {
 //            HomeScreen(navController)
 //        }
-        composable(Routes.HOME) {
-            HomeScreen()
+        composable(Routes.HOME) { backStackEntry ->
+
+            val homeViewModel: HomeViewModel = hiltViewModel()
+
+            HomeScreen(
+                onProductClick = { productId ->
+
+//                    navController.navigate("${Routes.PRODUCT_DETAILS}/$productId")
+                },
+                onBrandSelected = { brand ->
+
+                    homeViewModel.filterByBrand(brand)
+                }
+            )
+        }
+
+        composable(
+            route = Routes.PRODUCT_DETAILS,
+            arguments = listOf(navArgument("productId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId") ?: ""
+            ProductDetailsScreen(
+                productId = productId,
+                onBackClick = { navController.popBackStack() }
+            )
         }
 //        composable("product/{productId}") { backStackEntry ->
 //            val productId = backStackEntry.arguments?.getString("productId") ?: ""
