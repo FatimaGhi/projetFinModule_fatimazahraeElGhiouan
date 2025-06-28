@@ -13,11 +13,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -27,15 +25,33 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun CartScreen(
     navController: NavController,
-    viewModel: CartViewModel = hiltViewModel(),
-    userId: String = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    viewModel: CartViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val user = FirebaseAuth.getInstance().currentUser
+    val userId = user?.uid
+
     val cartItems = viewModel.cartItems
 
-    LaunchedEffect(Unit) {
-        if (userId.isNotEmpty()) {
+    LaunchedEffect(userId) {
+        if (!userId.isNullOrEmpty()) {
             viewModel.loadCart(userId)
+        } else {
+            Toast.makeText(context, "bb login is first", Toast.LENGTH_SHORT).show()
+            navController.navigate("login") {
+                popUpTo(0)
+            }
         }
+    }
+
+    if (userId.isNullOrEmpty()) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text("يرجى تسجيل الدخول لعرض السلة.")
+        }
+        return
     }
 
     val total = cartItems.sumOf { it.price * it.quantity }
@@ -76,7 +92,7 @@ fun CartScreen(
 
         // Section Total & Paiement
         CheckoutSection(
-            total = total.toDouble(),
+            total = total,
             onCheckout = {
                 navController.navigate("checkout_form")
             }

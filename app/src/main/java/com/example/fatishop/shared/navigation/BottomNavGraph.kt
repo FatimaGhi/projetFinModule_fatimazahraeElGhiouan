@@ -1,6 +1,7 @@
 package com.example.fatishop.shared.navigation
 
 
+import ProfileScreen
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,8 +13,8 @@ import com.example.fatishop.features.Checkout.CheckoutFormScreen
 import com.example.fatishop.features.cart.CartScreen
 import com.example.fatishop.features.cart.CartViewModel
 import com.example.fatishop.features.home.HomeScreen
-//import com.example.fatishop.features.home.HomeScreen
-import com.example.fatishop.features.profile.ProfileScreen
+import com.example.fatishop.features.home.HomeScreen
+//import com.example.fatishop.features.profile.ProfileScreen
 import com.example.fatishop.features.wishlist.WishListScreen
 import com.google.firebase.auth.FirebaseAuth
 
@@ -35,7 +36,7 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
                 CartScreen(
                     navController = navController,
                     viewModel = viewModel,
-                    userId = userId
+//                    userId = userId
                 )
             } else {
                 Text("Please login first")

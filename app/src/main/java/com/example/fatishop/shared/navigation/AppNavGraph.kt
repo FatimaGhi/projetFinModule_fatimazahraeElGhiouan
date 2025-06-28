@@ -10,7 +10,7 @@ import com.example.fatishop.features.auth.register.RegisterScreen
 import com.example.fatishop.features.cart.CartScreen
 
 import com.example.fatishop.features.main.MainScreen
-import com.example.fatishop.features.profile.ProfileScreen
+//import com.example.fatishop.features.profile.ProfileScreen
 import com.example.fatishop.features.welcome.WelcomeScreen
 import com.example.fatishop.features.wishlist.WishListScreen
 import com.example.fatishop.shared.utils.Routes
@@ -63,7 +63,7 @@ fun AppNavGraph(navController: NavHostController) {
                 CartScreen(
                     navController = navController,
                     viewModel = viewModel,
-                    userId = userId
+//                    userId = userId
                 )
             } else {
                 Text("User not logged in")

@@ -31,7 +31,6 @@ fun CheckoutFormScreen(
     val context = LocalContext.current
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
-    // ✅ ضروري نحمل السلة هنا قبل ما نستعمل cartItems
     LaunchedEffect(Unit) {
         if (userId.isNotEmpty()) {
             viewModel.loadCart(userId)
@@ -50,34 +49,50 @@ fun CheckoutFormScreen(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        // 🏠 معلومات الزبون
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Nom complet") },
-            modifier = Modifier.fillMaxWidth()
+        // ✅ Title Checkout
+        Text(
+            text = "🛒 Finaliser la commande",
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        // 🧾 Card des informations
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium,
+            elevation = CardDefaults.cardElevation(4.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Nom complet") },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-        OutlinedTextField(
-            value = address,
-            onValueChange = { address = it },
-            label = { Text("Adresse") },
-            modifier = Modifier.fillMaxWidth()
-        )
+                Spacer(modifier = Modifier.height(8.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = address,
+                    onValueChange = { address = it },
+                    label = { Text("Adresse") },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-        OutlinedTextField(
-            value = phone,
-            onValueChange = { phone = it },
-            label = { Text("Téléphone") },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Phone
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = phone,
+                    onValueChange = { phone = it },
+                    label = { Text("Téléphone") },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Phone
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -90,12 +105,22 @@ fun CheckoutFormScreen(
                         Toast.makeText(context, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show()
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text("Passer au paiement")
             }
         } else {
-            // 💳 طرق الأداء
+            Divider(modifier = Modifier.padding(vertical = 16.dp))
+
+            Text(
+                text = "Méthode de paiement",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            // 💳 Options de paiement
             PaymentOption(
                 title = "Carte bancaire",
                 icon = Icons.Default.CreditCard,
@@ -126,15 +151,14 @@ fun CheckoutFormScreen(
                     )
                 },
                 enabled = selectedPayment.isNotEmpty(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text("Confirmer la commande")
             }
         }
     }
 }
-
-
 @Composable
 fun PaymentOption(
     title: String,
