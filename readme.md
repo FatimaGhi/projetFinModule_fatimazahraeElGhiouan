@@ -37,29 +37,29 @@ Elle permet aux utilisateurs de :
 
 com.example.fatishop/
 ├── features/
-│ ├── auth/ # Authentification
-│ ├── cart/ # Gestion panier
-│ ├── checkout/ # Paiement
-│ ├── home/ # Accueil produits
-│ ├── productdetails/ # Détails produits
-│ ├── profile/ # Profil utilisateur
-│ ├── welcome/ # Écran d'accueil
-│ └── wishlist/ # Favoris
+│   ├── auth/          # Authentification
+│   ├── cart/          # Gestion panier
+│   ├── checkout/      # Paiement
+│   ├── home/          # Accueil produits
+│   ├── productdetails/# Détails produits
+│   ├── profile/       # Profil utilisateur
+│   ├── welcome/       # Écran d'accueil
+│   └── wishlist/      # Favoris
 ├── shared/
-│ ├── model/ # Data classes
-│ ├── repository/ # Couche données
-│ ├── navigation/ # Navigation compose
-│ └── utils/ # Helpers
-├── ui.theme/ # Design system
-└── images/ # Captures d’écran de l'application
-├── welcome.jpg
-├── login.jpg
-├── register.jpg
-├── home.jpg
-├── detailProduct.jpg
-├── cart.jpg
-├── checkout.jpg
-└── profil.jpg
+│   ├── model/         # Data classes
+│   ├── repository/    # Couche données
+│   ├── navigation/    # Navigation compose
+│   └── utils/         # Helpers
+├── ui.theme/          # Design system
+└── images/            # Captures d’écran de l'application
+    ├── welcome.jpg
+    ├── login.jpg
+    ├── register.jpg
+    ├── home.jpg
+    ├── detailProduct.jpg
+    ├── cart.jpg
+    ├── checkout.jpg
+    └── profil.jpg
 
 
 ---
@@ -67,28 +67,28 @@ com.example.fatishop/
 ## 🖼️ Captures d'écran de l'application :
 
 ### 🏠 Écran d’accueil
-![welcome](images/welcome.jpg)
+<img src="images/welcome.jpg" alt="Écran d’accueil" width="300" />
 
 ### 🔐 Écran de connexion
-![login](images/login.jpg)
+![login](images/login.png)
 
 ### 📝 Écran d’inscription
-![register](images/register.jpg)
+![register](images/register.png)
 
 ### 🛍️ Page d’accueil des produits
-![home](images/home.jpg)
+![home](images/home.png)
 
 ### 📄 Détails d’un produit
-![detailProduct](images/detailProduct.jpg)
+![detailProduct](images/detailProduct.png)
 
 ### 🛒 Panier
-![cart](images/cart.jpg)
+![cart](images/cart.png)
 
 ### 💳 Checkout
-![checkout](images/checkout.jpg)
+![checkout](images/checkout.png)
 
 ### 👤 Profil utilisateur
-![profil](images/profil.jpg)
+![profil](images/profil.png)
 
 ---
 
