@@ -1,5 +1,6 @@
 package com.example.fatishop.features.cart
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,15 +15,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.fatishop.shared.model.CartItem
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.fatishop.shared.model.CartItem
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun CartScreen(
+    navController: NavController,
     viewModel: CartViewModel = hiltViewModel(),
     userId: String = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 ) {
@@ -71,7 +75,12 @@ fun CartScreen(
         }
 
         // Section Total & Paiement
-        CheckoutSection(total = total.toDouble())
+        CheckoutSection(
+            total = total.toDouble(),
+            onCheckout = {
+                navController.navigate("checkout_form")
+            }
+        )
     }
 }
 
@@ -161,7 +170,7 @@ private fun QuantitySelector(
 }
 
 @Composable
-private fun CheckoutSection(total: Double) {
+private fun CheckoutSection(total: Double, onCheckout: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -183,7 +192,7 @@ private fun CheckoutSection(total: Double) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { /* TODO: Checkout action */ },
+            onClick = onCheckout,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),

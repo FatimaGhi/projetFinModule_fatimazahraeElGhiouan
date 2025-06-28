@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.fatishop.features.Checkout.CheckoutFormScreen
 import com.example.fatishop.features.cart.CartScreen
 import com.example.fatishop.features.cart.CartViewModel
 import com.example.fatishop.features.home.HomeScreen
@@ -32,6 +33,7 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
 
             if (userId.isNotEmpty()) {
                 CartScreen(
+                    navController = navController,
                     viewModel = viewModel,
                     userId = userId
                 )
@@ -41,6 +43,15 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
         }
         composable(BottomNavItem.Wishlist.route) { WishListScreen() }
         composable(BottomNavItem.Profile.route) { ProfileScreen() }
+        composable("checkout_form") {
+            CheckoutFormScreen(
+                navController = navController,
+                onOrderSuccess = {
+                    navController.navigate(BottomNavItem.Home.route)
+                }
+            )
+        }
+
     }
 }
 

@@ -18,4 +18,13 @@ object FirebaseModule {
     fun provideFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }
+
+    @Provides
+    @Singleton
+    fun provideOrderRepository(
+        firestore: FirebaseFirestore
+    ): com.example.fatishop.shared.repository.OrderRepository {
+        return com.example.fatishop.shared.repository.OrderRepository(firestore)
+    }
 }
+

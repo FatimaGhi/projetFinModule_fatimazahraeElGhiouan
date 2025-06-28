@@ -17,6 +17,7 @@ import com.example.fatishop.shared.utils.Routes
 import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.fatishop.features.Checkout.CheckoutFormScreen
 import com.example.fatishop.features.cart.CartViewModel
 import com.example.fatishop.features.components.ProductDetailsScreen
 import com.example.fatishop.features.home.HomeScreen
@@ -60,6 +61,7 @@ fun AppNavGraph(navController: NavHostController) {
 
             if (userId.isNotEmpty()) {
                 CartScreen(
+                    navController = navController,
                     viewModel = viewModel,
                     userId = userId
                 )
@@ -77,6 +79,14 @@ fun AppNavGraph(navController: NavHostController) {
         }
         composable(Routes.MAIN) {
             MainScreen()
+        }
+        composable("checkout_form") {
+            CheckoutFormScreen(
+                navController = navController,
+                onOrderSuccess = {
+                    navController.navigate(Routes.HOME)
+                }
+            )
         }
     }
 }

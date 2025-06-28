@@ -101,6 +101,10 @@ dependencies {
     //hilt
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
+    implementation("androidx.compose.ui:ui-text:1.4.3")
+
+
+
 
 
 
