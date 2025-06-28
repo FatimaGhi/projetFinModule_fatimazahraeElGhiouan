@@ -105,6 +105,33 @@ class ProductRepository @Inject constructor(
             .set(cartItem)
             .await()
     }
+    suspend fun addFavorite(userId: String, productId: String) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("favorites")
+            .document(productId)
+            .set(mapOf("timestamp" to System.currentTimeMillis()))
+            .await()
+    }
+    suspend fun removeFavorite(userId: String, productId: String) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("favorites")
+            .document(productId)
+            .delete()
+            .await()
+    }
+    suspend fun isFavorite(userId: String, productId: String): Boolean {
+        val doc = firestore.collection("users")
+            .document(userId)
+            .collection("favorites")
+            .document(productId)
+            .get()
+            .await()
+        return doc.exists()
+    }
+
+
 
 
 

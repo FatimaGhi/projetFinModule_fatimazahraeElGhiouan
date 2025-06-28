@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
@@ -110,11 +111,74 @@ class HomeViewModel @Inject constructor(
             .document(product.id)
             .set(cartItem)
             .addOnSuccessListener {
-                Log.d("Cart", "✅ Added to cart")
+                Log.d("Cart", " Added to cart")
             }
             .addOnFailureListener {
-                Log.e("Cart", "❌ Failed to add to cart: ${it.message}")
+                Log.e("Cart", " Failed to add to cart: ${it.message}")
             }
     }
+
+    private val _favoriteProductIds = MutableStateFlow<Set<String>>(emptySet())
+    val favoriteProductIds: StateFlow<Set<String>> = _favoriteProductIds
+    private val firestore = FirebaseFirestore.getInstance()
+
+    fun loadFavorites(userId: String) {
+        viewModelScope.launch {
+            val snapshot = firestore.collection("users")
+                .document(userId)
+                .collection("favorites")
+                .get()
+                .await()
+            _favoriteProductIds.value = snapshot.documents.map { it.id }.toSet()
+        }
+    }
+
+    fun toggleFavorite(userId: String, productId: String) {
+        viewModelScope.launch {
+            val favoritesRef = FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(userId)
+                .collection("favorites")
+                .document(productId)
+
+            if (_favoriteProductIds.value.contains(productId)) {
+                favoritesRef.delete().await()
+                _favoriteProductIds.value = _favoriteProductIds.value - productId
+            } else {
+                favoritesRef.set(mapOf("timestamp" to System.currentTimeMillis())).await()
+                _favoriteProductIds.value = _favoriteProductIds.value + productId
+            }
+        }
+    }
+
+
+    fun loadFavoriteProducts(userId: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val favoriteIds = firestore.collection("users")
+                    .document(userId)
+                    .collection("favorites")
+                    .get()
+                    .await()
+                    .documents
+                    .map { it.id }
+
+                val favoriteProducts = favoriteIds.mapNotNull { id ->
+                    productRepository.getProductById(id)
+                }
+
+                _products.value = favoriteProducts.map { product ->
+                    product.copy(isFavorite = true)
+                }
+            } catch (e: Exception) {
+                Log.e("Favorites", "Failed to load favorites: ${e.message}")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+
 
 }

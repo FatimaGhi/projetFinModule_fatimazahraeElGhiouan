@@ -14,8 +14,8 @@ import com.example.fatishop.features.cart.CartScreen
 import com.example.fatishop.features.cart.CartViewModel
 import com.example.fatishop.features.home.HomeScreen
 import com.example.fatishop.features.home.HomeScreen
+import com.example.fatishop.features.wishlist.FavoritesScreen
 //import com.example.fatishop.features.profile.ProfileScreen
-import com.example.fatishop.features.wishlist.WishListScreen
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -42,7 +42,11 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
                 Text("Please login first")
             }
         }
-        composable(BottomNavItem.Wishlist.route) { WishListScreen() }
+        composable(BottomNavItem.Wishlist.route) { navBackStackEntry ->
+            FavoritesScreen(
+                navController = navController
+            )
+        }
         composable(BottomNavItem.Profile.route) { ProfileScreen() }
         composable("checkout_form") {
             CheckoutFormScreen(

@@ -199,6 +199,14 @@ class CartViewModel @Inject constructor(
         return orderRepository.getOrdersForUser(userId)
     }
 
+    fun deleteCartItem(userId: String, productId: String) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("cart")
+            .document(productId)
+            .delete()
+    }
+
 
 
 }

@@ -45,10 +45,10 @@ fun WelcomeScreen(navController: NavController) {
 //            @Composable
 //            fun UploadButton() {
             // hado dyl product bax nzidhom fe firestore da9a wo7da hhh m3gaza ana
-                Button(onClick = { uploadProductsToFirestore(dummyPerfumes) }) {
-                    Text("Upload Products to Firestore")
-//                }
-            }
+//                Button(onClick = { uploadProductsToFirestore(dummyPerfumes) }) {
+//                    Text("Upload Products to Firestore")
+////                }
+//            }
         }
     }
 }

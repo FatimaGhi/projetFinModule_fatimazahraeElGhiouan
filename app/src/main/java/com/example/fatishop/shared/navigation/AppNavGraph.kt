@@ -12,7 +12,7 @@ import com.example.fatishop.features.cart.CartScreen
 import com.example.fatishop.features.main.MainScreen
 //import com.example.fatishop.features.profile.ProfileScreen
 import com.example.fatishop.features.welcome.WelcomeScreen
-import com.example.fatishop.features.wishlist.WishListScreen
+//import com.example.fatishop.features.wishlist.WishListScreen
 import com.example.fatishop.shared.utils.Routes
 import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
@@ -21,6 +21,7 @@ import com.example.fatishop.features.Checkout.CheckoutFormScreen
 import com.example.fatishop.features.cart.CartViewModel
 import com.example.fatishop.features.components.ProductDetailsScreen
 import com.example.fatishop.features.home.HomeScreen
+import com.example.fatishop.features.wishlist.FavoritesScreen
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -71,7 +72,7 @@ fun AppNavGraph(navController: NavHostController) {
         }
 
         composable(Routes.WISHLIST) {
-            WishListScreen()
+            FavoritesScreen( navController = navController)
         }
 
         composable(Routes.PROFILE) {

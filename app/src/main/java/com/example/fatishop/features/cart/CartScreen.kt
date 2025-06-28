@@ -1,6 +1,7 @@
 package com.example.fatishop.features.cart
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,12 +9,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -49,7 +52,7 @@ fun CartScreen(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text("يرجى تسجيل الدخول لعرض السلة.")
+            Text("login.")
         }
         return
     }
@@ -85,7 +88,8 @@ fun CartScreen(
                 CartItemCard(
                     item = item,
                     onIncrease = { viewModel.increaseQuantity(userId, item.productId) },
-                    onDecrease = { viewModel.decreaseQuantity(userId, item.productId) }
+                    onDecrease = { viewModel.decreaseQuantity(userId, item.productId) },
+                    onDelete = { viewModel.deleteCartItem(userId, item.productId) }
                 )
             }
         }
@@ -104,8 +108,14 @@ fun CartScreen(
 private fun CartItemCard(
     item: CartItem,
     onIncrease: () -> Unit,
-    onDecrease: () -> Unit
+    onDecrease: () -> Unit,
+    onDelete: () -> Unit
 ) {
+    val context = LocalContext.current
+    val imageResId = remember(item.imageUrl) {
+        context.resources.getIdentifier(item.imageUrl, "drawable", context.packageName)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,6 +131,14 @@ private fun CartItemCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            Image(
+                painter = painterResource(id = imageResId),
+                contentDescription = null,
+                modifier = Modifier.size(60.dp)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = item.name,
@@ -135,11 +153,16 @@ private fun CartItemCard(
                 )
             }
 
-            QuantitySelector(
-                quantity = item.quantity,
-                onIncrease = onIncrease,
-                onDecrease = onDecrease
-            )
+            Column(horizontalAlignment = Alignment.End) {
+                QuantitySelector(
+                    quantity = item.quantity,
+                    onIncrease = onIncrease,
+                    onDecrease = onDecrease
+                )
+                IconButton(onClick = onDelete) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                }
+            }
         }
     }
 }
